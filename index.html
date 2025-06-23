@@ -134,5 +134,16 @@
     © 2025 Nodara Technologies Inc. | <a href="#">Privacy Policy</a></p>
   </footer>
 
+  <!-- Prevent auto-focus scroll into embedded Cal.com calendar -->
+  <script>
+    document.addEventListener('focusin', function(e) {
+      var target = e.target;
+      if (target.tagName === 'IFRAME' && target.src.indexOf('cal.com') !== -1) {
+        target.blur();
+        window.scrollTo(0, 0);
+        window.focus();
+      }
+    });
+  </script>
 </body>
 </html>
