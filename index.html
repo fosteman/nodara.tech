@@ -22,7 +22,7 @@
     iframe { width: 100%; max-width: 800px; border: 1px solid #ccc; border-radius: 8px; margin: 40px auto 0; display: block; }
     form input, form textarea, form button { width: 100%; padding: 10px; margin-top: 8px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; }
     .dual-cta { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; margin-top: 40px; }
-    .highlight-line { text-align: center; font-size: 2em; font-weight: bold; margin-top: 50px; width: 100%; display: block; }
+    .highlight-line { text-align: center; font-size: 2.2em; font-weight: bold; margin-top: 60px; margin-bottom: 40px; width: 100%; display: block; }
   </style>
 </head>
 <body>
@@ -88,7 +88,7 @@
     <p class="highlight-line">Built by former operators, sellers, and buyers in the space.</p>
   </section>
 
-  <section class="section" style="text-align:center;background:#f9f9f9;">
+  <section class="section" style="text-align:center;background:#f9f9f9;" id="contact">
     <div class="dual-cta">
       <div style="max-width:600px;width:100%;text-align:left;">
         <h2>Know What You’re Looking For?</h2>
@@ -114,7 +114,7 @@
         <h2>Not Sure Where to Start?</h2>
         <p>Book a discovery call and let’s explore how we can help.</p>
         <a class="button" href="https://cal.com/russell-cole-uwt4lh/intro" target="_blank" onclick="plausible('Book Call')">Book a Discovery Call</a>
-        <iframe src="https://cal.com/russell-cole-uwt4lh/intro" height="600" frameborder="0"></iframe>
+        <!-- Removed the iframe to prevent auto-jumping -->
       </div>
     </div>
   </section>
@@ -134,16 +134,5 @@
     © 2025 Nodara Technologies Inc. | <a href="#">Privacy Policy</a></p>
   </footer>
 
-  <!-- Prevent auto-focus scroll into embedded Cal.com calendar -->
-  <script>
-    document.addEventListener('focusin', function(e) {
-      var target = e.target;
-      if (target.tagName === 'IFRAME' && target.src.indexOf('cal.com') !== -1) {
-        target.blur();
-        window.scrollTo(0, 0);
-        window.focus();
-      }
-    });
-  </script>
 </body>
 </html>
