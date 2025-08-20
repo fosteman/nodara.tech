@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nodara - Infrastructure Procurement</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-  <script async defer data-domain="nodara.tech" src="https://plausible.io/js/plausible.js"></script>
   <style>
     body { margin: 0; font-family: 'Inter', sans-serif; color: #000; background: #fff; line-height: 1.6; }
     h1, h2, h3 { font-family: 'Poppins', sans-serif; }
-    .section { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
+    .section { padding: 60px 20px; max-width: 1000px; margin: 24px auto; border-radius: 4px; border:1px solid grey; }
     .hero { background: #000; color: #fff; text-align: center; padding: 100px 20px; }
     .hero h1 { font-size: 3em; margin-bottom: 0.4em; color: #fff; }
     .hero p { font-size: 1.25em; color: #ddd; }
@@ -24,6 +23,8 @@
     .dual-cta { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; margin-top: 40px; }
     .highlight-line { text-align: center; font-size: 2em; font-weight: bold; margin-top: 50px; width: 100%; display: block; }
   </style>
+
+  <script src="//embed.typeform.com/next/embed.js"></script>
 </head>
 <body>
 
@@ -90,33 +91,35 @@
 
   <section class="section" style="text-align:center;background:#f9f9f9;">
     <div class="dual-cta">
-      <div style="max-width:600px;width:100%;text-align:left;">
-        <h2>Know What You’re Looking For?</h2>
-        <p>Tell us a bit about your needs and we’ll get back to you fast.</p>
-        <form action="https://formspree.io/f/your-form-id" method="POST">
-          <label>Your Name<br>
-            <input type="text" name="name" required>
-          </label><br>
-          <label>Work Email<br>
-            <input type="email" name="email" required>
-          </label><br>
-          <label>Current Infrastructure Challenges<br>
-            <textarea name="challenges" rows="4"></textarea>
-          </label><br>
-          <label>Budget Range (optional)<br>
-            <input type="text" name="budget">
-          </label><br>
-          <button type="submit" onclick="plausible('Submit Intake')">Submit Intake</button>
-        </form>
-      </div>
-
       <div style="max-width:800px;width:100%;">
         <h2>Not Sure Where to Start?</h2>
-        <p>Book a discovery call and let’s explore how we can help.</p>
         <a class="button" href="https://cal.com/russell-cole-uwt4lh/intro" target="_blank" onclick="plausible('Book Call')">Book a Discovery Call</a>
-        <iframe src="https://cal.com/russell-cole-uwt4lh/intro" height="600" frameborder="0"></iframe>
       </div>
     </div>
+  </section>
+
+  <section class="section">
+    <div data-tf-live="01K344TGRP0082YGREBQ7X5KH9"></div>
+    <h2 style="">Why Join?</h2>
+    <ul>
+      <li>Tired of 3-week quoting cycles?</li>
+      <li>Frustrated by hidden pricing and sales forms?</li>
+      <li>Want to help build better tooling for your team?</li>
+    </ul>
+    <p>We are too. So we're gathering a group of cloud architects, IT directors, and AI infra leads to:</p>
+    <ul>
+      <li>Share what’s broken in DC procurement</li>
+      <li>Influence Nodara’s product roadmap</li>
+      <li>Get early access to tooling built with your input</li>
+    </ul>
+
+    <h2 style="margin-top: 30px;">Who It’s For:</h2>
+    <ul>
+      <li>✔️ Infrastructure buyers</li>
+      <li>✔️ Procurement leads</li>
+      <li>✔️ Cloud & colocation architects</li>
+      <li>✔️ Technical advisors & IT leaders</li>
+    </ul>
   </section>
 
   <section class="section">
@@ -129,20 +132,15 @@
 
   <footer>
     <p><strong>NODARA</strong><br>
-    Independent Infrastructure Orchestration<br>
-    <a href="mailto:hello@nodara.tech">hello@nodara.tech</a> | <a href="#">LinkedIn</a><br>
-    © 2025 Nodara Technologies Inc. | <a href="#">Privacy Policy</a></p>
+      Independent Infrastructure Orchestration<br>
+      <a href="mailto:hello@nodara.tech?subject=Hello from Nodara Website&body=Hi Nodara! I am interested in...">hello@nodara.tech</a> | <a href="https://www.linkedin.com/in/russellcole/">LinkedIn</a><br>
+    © 2025 Nodara Technologies Inc.</p>
   </footer>
 
-  <!-- Prevent auto-focus scroll into embedded Cal.com calendar -->
   <script>
-    document.addEventListener('focusin', function(e) {
-      var target = e.target;
-      if (target.tagName === 'IFRAME' && target.src.indexOf('cal.com') !== -1) {
-        target.blur();
-        window.scrollTo(0, 0);
-        window.focus();
-      }
+    document.addEventListener('DOMContentLoaded', function() {
+      const iframe = document.querySelector('iframe');
+        iframe.focus({preventScroll: true})
     });
   </script>
 </body>
