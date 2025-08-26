@@ -187,7 +187,7 @@
   </footer>
 
   <script>
-    // Optional: track which intent a user clicked before opening the Typeform
+
     const buttons = document.querySelectorAll('a[data-intent]');
     buttons.forEach(btn => btn.addEventListener('click', () => {
       window.plausible && window.plausible('RoundtableIntent', { props: { intent: btn.dataset.intent } });
