@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Definitive 2025 Data Center Ecosystem Map – Nodara</title>
+  <meta name="description" content="A vendor‑neutral view of 200+ players across the global data center stack — free from Nodara. Download the full PDF and join the community." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta property="og:title" content="The Definitive 2025 Data Center Ecosystem Map" />
+  <meta property="og:description" content="A vendor‑neutral view of 200+ players across the global DC stack — free from Nodara." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/assets/nodara-ecosystem-preview.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <style>
+    :root{
+      --bg:#0b0f1a; --card:#0f1424; --muted:#94a3b8; --text:#e6edf5; --accent:#6ee7b7; --accent2:#60a5fa; --focus:#c084fc; --border:rgba(255,255,255,0.09);
+    }
+    html,body{height:100%;}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:radial-gradient(1200px 600px at 20% -10%, #1c2541 0%, rgba(12,18,34,0) 60%),
+          radial-gradient(900px 500px at 120% 10%, #0a4d68 0%, rgba(12,18,34,0) 60%),
+          linear-gradient(180deg,#0b0f1a 0%, #0b0f1a 100%);
+         color:var(--text); -webkit-font-smoothing:antialiased;}
+    .wrap{max-width:1040px;margin:0 auto;padding:32px 20px 80px;}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0 20px;border-bottom:1px solid var(--border);}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:0.2px}
+    .brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent2),var(--focus));display:grid;place-items:center;color:#0b0f1a;font-weight:900}
+    .tag{font-size:12px;color:var(--muted);border:1px solid var(--border);padding:6px 10px;border-radius:999px}
+    .hero{display:grid;grid-template-columns:1.15fr 0.85fr;gap:28px;align-items:center;padding:34px 0 10px}
+    .hero h1{font-size:40px;line-height:1.1;margin:0 0 12px;font-weight:800;}
+    .hero p.sub{color:var(--muted);font-size:18px;margin:0 0 18px}
+    .ctaRow{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .btn{appearance:none;border:none;color:#0b0f1a;background:linear-gradient(135deg,var(--accent),#22c55e);padding:12px 16px;border-radius:12px;font-weight:700;cursor:pointer}
+    .btn.secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
+    .previewCard{position:relative;border:1px solid var(--border);background:var(--card);border-radius:16px;overflow:hidden}
+    .previewImg{width:100%;height:320px;background:url('/assets/nodara-ecosystem-preview.jpg') center/cover no-repeat;filter:blur(8px) saturate(70%);transform:scale(1.06);}
+    .previewOverlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,15,26,0) 20%, rgba(11,15,26,0.7) 80%)}
+    .previewBadge{position:absolute;left:16px;bottom:16px;background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);border:1px solid var(--border);padding:10px 12px;border-radius:12px;font-size:12px;color:var(--text)}
+    .cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:22px}
+    .card{border:1px solid var(--border);background:var(--card);border-radius:16px;padding:18px}
+    .card h3{margin:0 0 10px;font-size:16px;color:#cbd5e1;text-transform:uppercase;letter-spacing:0.14em}
+    .muted{color:var(--muted)}
+    form{display:grid;gap:12px}
+    label{font-size:12px;color:#cbd5e1}
+    input,select,textarea{background:#0b1222;border:1px solid var(--border);border-radius:12px;color:var(--text);padding:12px;font-size:14px}
+    input:focus,select:focus,textarea:focus{outline:2px solid var(--focus);outline-offset:1px}
+    .hint{font-size:12px;color:var(--muted)}
+    .success{display:none;margin-top:10px;padding:12px;border-radius:10px;background:#052e1b;color:#b7f7d5;border:1px solid rgba(110,231,183,0.3)}
+    .foot{margin-top:36px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}
+    .qr{border:1px dashed var(--border);padding:6px;border-radius:8px}
+    @media (max-width:980px){.hero{grid-template-columns:1fr;}.cols{grid-template-columns:1fr}.previewImg{height:240px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand"><div class="logo">N</div> Nodara</div>
+      <div class="tag">Data Center · Market Map 2025</div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h1>The Definitive 2025 Data Center Ecosystem Map</h1>
+        <p class="sub">A vendor‑neutral view of <strong>200+ players</strong> across the global DC stack — free from Nodara.</p>
+        <div class="ctaRow">
+          <a class="btn" href="#signup">Get the full PDF</a>
+          <a class="btn secondary" href="#details">See what’s inside</a>
+        </div>
+      </div>
+      <div class="previewCard" aria-label="Preview image (blurred)">
+        <div class="previewImg" role="img" aria-label="Ecosystem preview"></div>
+        <div class="previewOverlay"></div>
+        <div class="previewBadge">Preview – full map inside · v1.0 · Aug 2025</div>
+      </div>
+    </section>
+
+    <section id="details" class="cols" aria-label="What you get">
+      <div class="card">
+        <h3>What you’ll receive</h3>
+        <ul class="muted">
+          <li>High‑res PDF of the full ecosystem (segments + companies)</li>
+          <li>Quarterly updates (v1.1, v1.2…) delivered to your inbox</li>
+          <li>Invite to the Nodara community (Slack)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Use cases</h3>
+        <ul class="muted">
+          <li>Partner scouting & vendor landscape briefings</li>
+          <li>Investor & board education</li>
+          <li>Competitive positioning & GTM planning</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="signup" class="cols" style="margin-top:22px">
+      <div class="card">
+        <h3>Request the PDF</h3>
+        <!-- OPTION A: Typeform (replace YOUR_TYPEFORM_URL) -->
+        <div id="typeformEmbed" style="display:none; height:620px; border-radius:12px; overflow:hidden">
+          <iframe id="tf" title="Nodara Ecosystem Download" width="100%" height="100%" frameborder="0" allow="camera; microphone; autoplay; encrypted-media;" src=""></iframe>
+        </div>
+        
+        <!-- OPTION B: Native form fallback (posts to /api/nodara-ecosystem-signup) -->
+        <form id="nativeForm" aria-label="Signup form">
+          <div>
+            <label for="name">Full name</label>
+            <input id="name" name="name" autocomplete="name" required />
+          </div>
+          <div>
+            <label for="email">Work email</label>
+            <input id="email" type="email" name="email" autocomplete="email" required />
+          </div>
+          <div>
+            <label for="company">Company</label>
+            <input id="company" name="company" autocomplete="organization" required />
+          </div>
+          <div>
+            <label for="role">Role</label>
+            <input id="role" name="role" autocomplete="organization-title" required />
+          </div>
+          <div>
+            <label for="suggest">Suggest a company missing from the map (optional)</label>
+            <textarea id="suggest" name="suggest" rows="3" placeholder="Name, website, and the best‑fit segment"></textarea>
+          </div>
+          <div class="hint">We’ll email you the download link and add you to the quarterly update list. No spam.</div>
+          <div style="display:flex; gap:10px; align-items:center; margin-top:6px">
+            <button class="btn" type="submit">Email me the PDF</button>
+            <a class="btn secondary" id="viewSample" href="/assets/nodara-map-sample.png" target="_blank" rel="noopener">View teaser</a>
+          </div>
+          <div id="success" class="success">Thanks! Check your inbox for a message from Nodara with the download link. If it’s not there, peek in spam/promotions.</div>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Privacy & notes</h3>
+        <p class="muted">Your info is used to send the PDF and updates. Unsubscribe anytime. By submitting, you agree to our <a href="/privacy" style="color:#93c5fd">privacy policy</a>. If you prefer, email <a href="mailto:hello@nodara.tech" style="color:#93c5fd">hello@nodara.tech</a> and we’ll send it manually.</p>
+        <div class="qr">Optional QR placeholder for print → link to this page</div>
+      </div>
+    </section>
+
+    <div class="foot">
+      <div>© Nodara · Ecosystem Map v1.0 · Aug 2025</div>
+      <div>Questions? <a href="mailto:hello@nodara.tech" style="color:#93c5fd">hello@nodara.tech</a></div>
+    </div>
+  </div>
+
+  <script>
+    // ====== CONFIG ======
+    // If you use Typeform/Tally, paste the form URL below. Leave empty to use the native form.
+    const TYPEFORM_URL = ""; // e.g., "https://form.typeform.com/to/XXXXXX"
+    // The PDF you want to deliver (server will email this link). Also used for client-side fallback if desired.
+    const PDF_URL = "/downloads/Nodara-Data-Center-Ecosystem-Map-2025.pdf";
+
+    // ====== TYPEFORM vs NATIVE ======
+    const tfWrap = document.getElementById('typeformEmbed');
+    const tf = document.getElementById('tf');
+    const nativeForm = document.getElementById('nativeForm');
+
+    if (TYPEFORM_URL) {
+      tfWrap.style.display = 'block';
+      tf.src = TYPEFORM_URL;
+      nativeForm.style.display = 'none';
+    }
+
+    // ====== NATIVE FORM HANDLER ======
+    nativeForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = nativeForm.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Sending…';
+
+      const payload = Object.fromEntries(new FormData(nativeForm));
+      try {
+        // POST to your backend that (1) stores the lead, (2) emails the PDF link using Resend/Mailgun/etc.
+        const res = await fetch('/api/nodara-ecosystem-signup', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...payload, asset: 'ecosystem-map-2025', pdf: PDF_URL })
+        });
+        if (!res.ok) throw new Error('Request failed');
+        nativeForm.reset();
+        document.getElementById('success').style.display = 'block';
+        btn.textContent = 'Sent!';
+      } catch (err) {
+        btn.disabled = false; btn.textContent = 'Email me the PDF';
+        alert('Something went wrong. Please try again or email hello@nodara.tech');
+      }
+    });
+  </script>
+</body>
+</html>
