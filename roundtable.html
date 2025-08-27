@@ -35,8 +35,14 @@
     .embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px}
     .muted{color:#6b7280;font-size:14px}
     .note{background:#0e1116;color:#dbe3f1;border:1px solid #1f2937;border-radius:12px;padding:16px}
-    footer{background:#0b132b;color:#e7ecf5;text-align:center;padding:20px;margin-top:42px;font-size:14px}
+    footer{background:#0b132b;color:#e7ecf5;text-align:center;padding:20px;margin-top:42px;font-size:14px;color:white}
+    footer{
+      a{
+        color:white
+      }
+    }
   </style>
+  <script src="//embed.typeform.com/next/embed.js"></script>
 </head>
 <body>
 
@@ -79,33 +85,26 @@
     <!-- BETA ACCESS -->
     <section class="card" style="margin-top:18px">
       <h2>Beta Access</h2>
-      <p>Join the Slack, get your **TCO benchmark card**, and help shape vendor-neutral procurement.</p>
+      <p>Join the Slack, get your <strong>TCO benchmark card</strong>, and help shape vendor-neutral procurement.</p>
+        <div data-tf-live="01K347G4CAF0YC6922X3CVCXAA"></div>
 
-      <!-- Typeform (collects email, role, and optional peer referrals—no codes) -->
-      <div class="embed" role="group" aria-label="Signup form">
-        <iframe
-          src="https://YOUR-SUBDOMAIN.typeform.com/to/XYZ123"
-          title="Nodara Roundtable — Signup"
-          allow="camera; microphone; autoplay; encrypted-media;"
-          allowfullscreen>
-        </iframe>
-      </div>
-      <p class="muted">Tip: include up to 3 qualified peers (buyers or resellers of infra) directly in the form to unlock Founder status faster—no referral code required.</p>
-
-      <a class="cta" href="https://join.slack.com/t/nodara/shared_invite/zt-3brpuspxv-wGSlFz5ptfmEmwAu6faBlg" target="_blank" rel="noopener">
-        Join the Roundtable Slack
-      </a>
+<!--      <a class="cta" href="https://join.slack.com/t/nodara/shared_invite/zt-3brpuspxv-wGSlFz5ptfmEmwAu6faBlg" target="_blank" rel="noopener">-->
+<!--        Join the Roundtable Slack-->
+<!--      </a>-->
 
       <div class="note" style="margin-top:14px">
         <strong>TCO benchmark card on join:</strong> a one-page snapshot of market averages vs. your current costs across key categories (GPU clusters, VMs, colo rack, storage). Use it as a quick baseline before deeper scoping.
       </div>
 
-      <noscript>
-        <p>If the form doesn’t load, <a href="https://YOUR-SUBDOMAIN.typeform.com/to/XYZ123" target="_blank" rel="noopener">open the signup form here</a>.</p>
-      </noscript>
     </section>
   </main>
 
-  <footer>© 2025 Nodara Technologies — All rights reserved.</footer>
+  <footer>
+    <div class="wrap">
+      <p><strong>NODARA</strong> • Built by former operators, sellers, and buyers who’ve lived infra procurement firsthand.</p>
+      <p><a href="mailto:russell.cole@nodara.tech?subject=Hello from Nodara Website&body=Hi Nodara! I am interested in...">hello@nodara.tech</a></p>
+      <p>© 2025 Nodara Technologies Inc.</p>
+    </div>
+  </footer>
 </body>
 </html>
