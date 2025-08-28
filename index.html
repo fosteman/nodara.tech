@@ -207,6 +207,242 @@
     </div>
 </section>
 
+<section>
+<style>
+    .shell{
+        --bg:#0b0f14;--panel:#0f1520;--chat:#0c1117;--bubble:#182030;--border:#25344a;--buyer:#1a2333;--text:#e6edf3;--accent:#2ea043;
+        background:var(--bg);color:var(--text);
+        max-width:900px;margin:20px auto;padding:20px;background:var(--panel);border:1px solid #1e293b;border-radius:12px;box-shadow:0 0 20px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:12px}
+    .chat{position:relative;flex:1;min-height:60vh;max-height:78vh;overflow:auto;background:var(--chat);border-radius:12px;padding:10px}
+    .row{display:flex;align-items:flex-start;margin:10px 0}
+    .avatar{width:30px;height:30px;border-radius:50%;margin:0 10px;border:1px solid var(--border)}
+    .agent .avatar{background:#2ea043}.buyer .avatar{background:#1f6feb}
+    .bubble{padding:10px 14px;background:var(--bubble);border:1px solid var(--border);border-radius:12px;max-width:72%;line-height:1.45}
+    .buyer .bubble{background:var(--buyer);margin-left:auto}
+    .thinking{display:inline-flex;gap:4px}
+    .dot{width:6px;height:6px;background:#cde8ff;border-radius:50%;animation:blink 1.2s infinite ease-in-out}
+    .dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+    @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+    .jump{position:sticky;bottom:8px;display:none;margin-left:auto;z-index:2}
+    .jump button{background:#0f1726;border:1px solid #2a3b55;color:var(--text);padding:6px 10px;border-radius:999px;font-size:12px;cursor:pointer}
+    .jump button:hover{border-color:#3c567a}
+    .inputbar{display:flex;gap:10px;align-items:center;background:#0c1117;border:1px solid #1f2a3d;border-radius:12px;padding:8px 10px}
+    .inputbar textarea{flex:1;resize:none;max-height:120px;min-height:24px;background:transparent;border:none;color:var(--text);outline:none;font:inherit;line-height:1.35}
+    .controls{display:flex;gap:6px;align-items:center}
+    .iconbtn{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:8px;border:1px solid #2a3b55;background:#0f1726;color:var(--text);cursor:pointer}
+    .iconbtn:hover{border-color:#3c567a}.up{font-weight:700}
+    .actions{display:flex;gap:8px;margin-top:8px}
+    .btn{background:#0f1726;border:1px solid #2a3b55;color:var(--text);padding:8px 10px;border-radius:10px;font-size:13px;cursor:pointer}
+    .btn:hover{border-color:#3c567a}
+    .download-link{display:inline-block;padding:6px 10px;background:var(--accent);color:#fff;border-radius:6px;font-size:13px;text-decoration:none}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55)}
+    .modal .card{background:var(--panel);border:1px solid #2a3b55;border-radius:12px;padding:18px;width:min(420px,90vw)}
+    .modal h3{margin:0 0 8px;font-size:16px}
+    .field{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+    .modal input{background:var(--chat);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text)}
+    .modal .actions{justify-content:flex-end}
+</style>
+    <div class="shell" id="demo">
+        <div id="chat" class="chat" aria-live="polite">
+            <div class="jump" id="jump"><button id="jumpBtn">Jump to latest ↓</button></div>
+        </div>
+
+        <div class="inputbar" aria-label="Type a message">
+            <textarea id="prompt" placeholder="Message Nodara…" rows="1"></textarea>
+            <div class="controls">
+                <button class="iconbtn up" id="sendBtn" title="Send">↑</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign up / log in modal (demo) -->
+    <div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+        <div class="card">
+            <h3 id="authTitle">Create your Nodara account</h3>
+            <div style="opacity:.85;font-size:13px;margin-bottom:8px">Save this chat, unlock full quote downloads, and access the Ops Center.</div>
+            <div class="field"><label>Email</label><input placeholder="you@company.com"/></div>
+            <div class="field"><label>Password</label><input type="password" placeholder="••••••••"/></div>
+            <div class="actions">
+                <button class="btn" id="closeAuth">Cancel</button>
+                <button class="btn" id="fakeSignup">Sign Up (demo)</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ===== pacing ===== */
+        const SPEED = { autoType: 40, autoTypeJitter: 20, agentChar: 20, agentJitter: 12, agentStartDelay: 950, agentStartJitter: 500 };
+
+        /* ===== corrected flow (with system architect question) ===== */
+        const PLAYBOOK = [
+            {role:'buyer', text:"Hi — I’m looking for a private cloud solution in Canada."},
+
+            {role:'agent', text:"Great. For stack preference: VMware or Nutanix? Note: <b>Hut 8</b> operates a <b>pre-bought VMware Cloud</b> which enables <b>fixed pricing for the full term</b> — rare in this market. I can compare both and flag that advantage."},
+            {role:'buyer', text:"Please compare both — the fixed VMware pricing sounds appealing."},
+
+            {role:'agent', text:"Sourcing Canadian options and normalizing SLAs, ops, and contract models…"},
+            {role:'thinking', caption:"Checking vetted vendors…"},
+            {role:'action', name:'compare', rows:[
+                    { option:"VMware (Hut 8 — fixed pricing)",
+                        highlights:"Pre-bought capacity enables <b>fixed pricing</b> for full term; strong DRaaS path; sustainability reporting.",
+                        pricing:"Predictable OPEX; license editions: vSphere Std/Ent+. Bundles typically include VMware licenses + managed ops."},
+                    { option:"Nutanix AHV (Telehouse)",
+                        highlights:"Competitive node bundles; AHV included; flexible scaling; strong interconnect.",
+                        pricing:"Attractive for greenfield VM stacks; licensing included with AHV; VMware interop via migration tools."}
+                ]},
+
+            {role:'agent', text:"Which route should we pursue for your quote: <b>VMware fixed-pricing (Hut 8)</b> or <b>Nutanix AHV</b>?"},
+            {role:'buyer', text:"Let’s go with VMware fixed-pricing via Hut 8."},
+
+            {role:'agent', text:"Understood — Hut 8 it is. (Equinix is also strong in Canada, but Hut 8 stands out for predictable fixed pricing.)"},
+
+            {role:'agent', text:"For VMware, which license edition and how many? (e.g., <b>vSphere Enterprise Plus</b>, count of sockets/VMs)"},
+            {role:'buyer', text:"vSphere Enterprise Plus — about 20."},
+
+            {role:'agent', text:"Now workload sizing so I can design the architecture: target <b>vCPU/RAM</b>, <b>storage tiers</b> (object/block/file), any <b>GPU</b> need?"},
+            {role:'buyer', text:"80 vCPU / 512 GB RAM; 50 TB block + 100 TB object; no GPUs."},
+
+            {role:'agent', text:"DR objectives to calibrate DRaaS: preferred <b>RPO</b> and <b>RTO</b>?"},
+            {role:'buyer', text:"RPO 4h / RTO 2h."},
+
+            // 👇 Inserted new branch here
+            {role:'agent', text:"Would you like to loop in one of Nodara’s <b>vendor-neutral system architects</b> for a deeper technical discussion before we generate your TCO?"},
+            {role:'buyer', text:"Please, no more sales hand-offs 😅. I’ve spent too much energy talking to reps that went nowhere."},
+            {role:'agent', text:"Understood. No sales runaround here — just clear answers. Let’s keep going."},
+            // 👆 End branch
+
+            {role:'agent', text:"Perfect. I’ll generate your <b>solution architecture</b> and prepare a <b>TCO snapshot</b> based on Hut 8’s fixed-pricing model…"},
+            {role:'thinking', caption:"Normalizing Hut 8 fixed-pricing bundle + ops + DRaaS…"},
+            {role:'action', name:'tco'},
+            {role:'action', name:'cta'},
+            {role:'agent', text:"After sign-up, you’ll set your profile and payment details. You’ll also get access to the operations center to manage provisioning and any migration tasks, plus a live TCO panel for ongoing optimization."}
+        ];
+
+        /* ===== TCO data ===== */
+        const TCO = {
+            term:"36-month term",
+            lines:[
+                "Compute (80 vCPU / 512 GB RAM): <b>$6,500/mo</b>",
+                "Storage (50 TB block + 100 TB object): <b>$2,800/mo</b>",
+                "VMware licenses — vSphere Ent+ (≈20): <b>$1,200/mo</b>",
+                "Managed ops: <b>$2,000/mo</b>",
+                "DRaaS (RPO 4h / RTO 2h): <b>$1,500/mo</b>"
+            ],
+            monthlyTotal:"$14,000/mo",
+            termTotal:"$504,000",
+            disclaimer:"Demo snapshot — in-platform quotes are validated in real time against live inventory and contract terms. Figures shown are rough ballparks; Nodara continuously checks vendors for reserved-capacity discounts, promos, and lower-cost options on your behalf.",
+            textFile:[
+                "Nodara — TCO Snapshot (Demo)","Term: 36 months","",
+                "Compute (80 vCPU / 512 GB RAM): $6,500/mo",
+                "Storage (50 TB block + 100 TB object): $2,800/mo",
+                "VMware licenses — vSphere Ent+ (≈20): $1,200/mo",
+                "Managed ops: $2,000/mo",
+                "DRaaS (RPO 4h / RTO 2h): $1,500/mo","",
+                "Estimated monthly total: $14,000/mo",
+                "Estimated 36-month total: $504,000","",
+                "Demo snapshot — in-platform quotes are validated in real time against live inventory and contract terms. Nodara continuously checks vendors for reserved-capacity discounts, promos, and lower-cost options on your behalf."
+            ]
+        };
+
+        /* ===== autoscroll ===== */
+        let autoScroll = true;
+        const chat = document.getElementById('chat');
+        const jump = document.getElementById('jump');
+        document.getElementById('jumpBtn').onclick=()=>{ autoScroll=true; chat.scrollTop=chat.scrollHeight; jump.style.display='none'; };
+        chat.addEventListener('scroll', ()=>{ const near=chat.scrollTop+chat.clientHeight>=chat.scrollHeight-10; autoScroll=near; jump.style.display=near?'none':'block'; });
+        function scrollToBottom(force=false){ if(force||autoScroll) chat.scrollTop=chat.scrollHeight; }
+
+        /* ===== modal (demo) ===== */
+        const authModal=document.getElementById('authModal');
+        document.getElementById('closeAuth').onclick=()=> authModal.style.display='none';
+        document.getElementById('fakeSignup').onclick=()=>{ authModal.style.display='none'; bubbleInsert("Thanks — your demo account would be created here. Next you’d set profile & payment details and enter the Ops Center for provisioning and live TCO."); };
+
+        /* ===== helpers ===== */
+        function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+        function jitter(ms,j){ return ms + Math.random()*j; }
+        function addRow(role){
+            const row=document.createElement('div'); row.className='row '+role;
+            const avatar=document.createElement('div'); avatar.className='avatar';
+            const bubble=document.createElement('div'); bubble.className='bubble';
+            if(role==='buyer'){ row.classList.add('buyer'); row.appendChild(bubble); row.appendChild(avatar); }
+            else { row.classList.add('agent'); row.appendChild(avatar); row.appendChild(bubble); }
+            chat.appendChild(row); scrollToBottom(); return bubble;
+        }
+        function bubbleInsert(html){ const b=addRow('agent'); b.innerHTML=html; scrollToBottom(); }
+        function showBuyerInstant(msg){ const b=addRow('buyer'); b.textContent=msg; scrollToBottom(); }
+
+        async function streamAgent(msg){
+            const b=addRow('agent');
+            await sleep(jitter(SPEED.agentStartDelay,SPEED.agentStartJitter));
+            if (msg.includes('<ul')||msg.includes('<table')){ b.innerHTML=msg; scrollToBottom(); return; }
+            const hasTags=/<[^>]+>/.test(msg); const plain=hasTags?msg.replace(/<[^>]+>/g,''):msg;
+            b.textContent=''; for(let i=0;i<plain.length;i++){ b.textContent+=plain[i]; scrollToBottom(); await sleep(jitter(SPEED.agentChar,SPEED.agentJitter)); }
+            if(hasTags){ b.innerHTML=msg; scrollToBottom(); }
+        }
+        function thinkingRow(caption){
+            const row=document.createElement('div'); row.className='row agent';
+            const avatar=document.createElement('div'); avatar.className='avatar';
+            const bubble=document.createElement('div'); bubble.className='bubble';
+            const dots=document.createElement('div'); dots.className='thinking';
+            dots.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+            bubble.appendChild(dots); row.appendChild(avatar); row.appendChild(bubble); chat.appendChild(row);
+            if(caption){ const note=document.createElement('div'); note.className='bubble'; note.style.marginLeft='40px'; note.textContent=caption; chat.appendChild(note); }
+            scrollToBottom(); return row;
+        }
+        function downloadTCOText(filename, lines){
+            const blob=new Blob([lines.join('\n')],{type:'application/pdf'}); const url=URL.createObjectURL(blob);
+            const a=document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),800);
+        }
+        function renderStackCompare(rows){
+            const bubble=addRow('agent'); bubble.innerHTML="<b>Stack comparison — VMware vs Nutanix</b>";
+            const table=document.createElement('div'); table.style.border='1px solid #25344a'; table.style.borderRadius='10px'; table.style.overflow='hidden'; table.style.marginTop='8px';
+            rows.forEach((r,idx)=>{ const row=document.createElement('div'); row.style.display='grid'; row.style.gridTemplateColumns='180px 1fr 1fr'; row.style.gap='10px'; row.style.padding='10px'; row.style.background=idx%2?'#0f1726':'#0c1117'; row.innerHTML=`<div><b>${r.option}</b></div><div>${r.highlights}</div><div>${r.pricing}</div>`; table.appendChild(row); });
+            bubble.appendChild(table); scrollToBottom();
+        }
+        function renderTCOSnapshot(s){
+            const b=addRow('agent');
+            const title=document.createElement('b'); title.textContent=`TCO Snapshot — ${s.term}`; b.appendChild(title);
+            const ul=document.createElement('ul'); s.lines.forEach(l=>{ const li=document.createElement('li'); li.innerHTML=l; ul.appendChild(li); }); b.appendChild(ul);
+            const totals=document.createElement('ul'); totals.innerHTML=`<li><em>Estimated monthly total:</em> <b>${s.monthlyTotal}</b></li><li><em>Estimated ${s.term} total:</em> <b>${s.termTotal}</b></li>`; b.appendChild(totals);
+            const actions=document.createElement('div'); actions.className='actions';
+            const dl=document.createElement('a'); dl.href='#'; dl.className='download-link'; dl.textContent='Download TCO (demo)'; dl.onclick=e=>{e.preventDefault(); downloadTCOText('Nodara_TCO_Snapshot_Demo.pdf', s.textFile);};
+            actions.appendChild(dl); b.appendChild(actions);
+            const note=document.createElement('div'); note.style.opacity='.85'; note.style.fontSize='12px'; note.style.marginTop='6px';
+            note.textContent=s.disclaimer; b.appendChild(note); scrollToBottom();
+        }
+        function renderAuthCTA(){
+            const b=addRow('agent'); const p=document.createElement('div');
+            p.innerHTML="To unlock the <b>full quote download</b> and begin provisioning, please create your free Nodara account or log in.";
+            const actions=document.createElement('div'); actions.className='actions';
+            const su=document.createElement('button'); su.className='btn'; su.textContent='Sign Up'; su.onclick=()=> authModal.style.display='flex';
+            const li=document.createElement('button'); li.className='btn'; li.textContent='Log In'; li.onclick=()=> authModal.style.display='flex';
+            actions.appendChild(su); actions.appendChild(li); b.appendChild(p); b.appendChild(actions); scrollToBottom();
+        }
+
+        /* ===== autoplay ===== */
+        const ta=document.getElementById('prompt');
+        function autoResize(){ ta.style.height='24px'; ta.style.height=Math.min(120, ta.scrollHeight)+'px'; }
+        async function typeIntoBox(text){ ta.value=''; autoResize(); for(let i=0;i<text.length;i++){ ta.value+=text[i]; autoResize(); await sleep(jitter(SPEED.autoType,SPEED.autoTypeJitter)); } }
+        function postBuyerFromBox(){ const t=ta.value.trim(); if(!t) return; ta.value=''; autoResize(); showBuyerInstant(t); }
+
+        async function play(){
+            for(const turn of PLAYBOOK){
+                if(turn.role==='buyer'){ await typeIntoBox(turn.text); postBuyerFromBox(); continue; }
+                if(turn.role==='agent'){ await streamAgent(turn.text); continue; }
+                if(turn.role==='thinking'){ const t=thinkingRow(turn.caption||'Thinking…'); await sleep(jitter(SPEED.agentStartDelay,SPEED.agentStartJitter)); t.remove(); continue; }
+                if(turn.role==='action'){
+                    if(turn.name==='compare') renderStackCompare(turn.rows);
+                    if(turn.name==='tco') renderTCOSnapshot(TCO);
+                    if(turn.name==='cta') renderAuthCTA();
+                    continue;
+                }
+            }
+        }
+        if(document.readyState==='complete'||document.readyState==='interactive') setTimeout(play,120);
+        else window.addEventListener('DOMContentLoaded', ()=> setTimeout(play,120));
+    </script>
+</section>
+
 <section class="section">
     <div class="split-section">
         <div class="split">
