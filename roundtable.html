@@ -15,11 +15,11 @@
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6;background:#f6f7f9;color:#0c1220}
-    .hero{background:#000; color:var(--ink); padding:72px 20px 48px; text-align:left}
+    .hero{background:#000; color:var(--ink); padding:0px 0px 72px 0px; text-align:left}
     .wrap{max-width:var(--max); margin:0 auto}
-    .hero h1{font-size:clamp(32px,5vw,56px);margin:0 0 14px;font-weight:800;letter-spacing:.3px}
-    .hero p{max-width:900px; color:var(--muted); font-size:clamp(16px,2.4vw,20px); margin:0 0 18px}
-    .pills{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+    .hero h1{font-size:clamp(32px,5vw,56px);margin:0 0 14px;font-weight:800;letter-spacing:.3px;padding: 16px;}
+    .hero p{max-width:900px; color:var(--muted); font-size:clamp(16px,2.4vw,20px); margin:0 0 18px; padding: 16px;}
+    .pills{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;padding: 16px;}
     .pill{background:var(--pill); color:var(--ink); padding:10px 14px; border-radius:999px; border:1px solid #2a2d33}
     main{max-width:var(--max); margin:36px auto; padding:0 20px}
     .grid{display:grid; gap:16px}
@@ -48,6 +48,9 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div style="display:flex;justify-content:start;">
+      <a href="index.html"><img src="static/logo.png" width="128px" /></a>
+    </div>
     <div class="wrap">
       <h1>The Infra Roundtable</h1>
       <p>Private, vendor-neutral Slack where <strong>buyers</strong> and <strong>resellers</strong> swap real pricing, compare architectures, and get first access to Nodara tools and vendor intros.</p>
